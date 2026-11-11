@@ -204,3 +204,18 @@ cargo test --no-default-features
 ## Contributing
 
 We welcome contributions, please see [CONTRIBUTING.md](./CONTRIBUTING.md) for more specifics.
+
+## Tangram multiarchitecture images
+
+This fork packages the upstream exporter for Linux amd64 and arm64 without
+changing its metrics implementation. Its Dockerfile cross-compiles in a Debian
+build environment and packages the corresponding native FoundationDB client and
+CLI in a Debian runtime image. ARM builds require a FoundationDB release that
+publishes aarch64 assets (the default is 7.3.77).
+
+Build and publish both architectures with Docker Buildx:
+
+```nu
+docker buildx build --platform linux/amd64,linux/arm64 --push --tag ghcr.io/tangramdotdev/fdbexporter:2.4.0-7.3.77-tangram.1 .
+```
+
